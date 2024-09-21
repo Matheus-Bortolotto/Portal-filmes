@@ -1,8 +1,13 @@
-export default function CardContainer() {
+export default function CardContainer({titulo, children}) {
     return(
         <>
-        <h1>Card Container</h1>
-        {/* Container para cards */}
+        <div>
+            <h1>{titulo}</h1>
+            <div className="flex gap-4">
+                {children}
+            </div>
+        </div>
+ 
         </>
     )
 }
