@@ -9,6 +9,7 @@ import MoviesByGenrePage from './pages/MoviesByGenrePage.jsx'
 import GenreListPage from './pages/GenreListPage.jsx'
 import MovieDetailPage from './pages/MovieDetailPage.jsx'
 import PagesNotFound from './pages/PagesNotFound.jsx'
+import Contato from './pages/Contato.jsx'
 
 const router = createBrowserRouter([{
   path:'/',
@@ -19,6 +20,7 @@ const router = createBrowserRouter([{
       {path: 'filmes/:id', element:<MovieDetailPage/>},
       {path:'generos', element:<GenreListPage/>},
       {path: 'generos/:id', element:<MoviesByGenrePage/>},
+      { path: '/contato', element: <Contato /> },
       {path: '*', element: <PagesNotFound/>}
     ]   
 }
