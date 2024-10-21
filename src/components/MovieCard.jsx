@@ -16,7 +16,7 @@ export default function MovieCard({id, title, poster_path, handleFavorite, isFav
                       <MdFavorite className="text-red-500 transition-transform duration-300 ease-in-out transform scale-125" /> : 
                       <MdFavoriteBorder className="text-black transition-transform duration-300 ease-in-out transform scale-100" />}
                 </button>
-              <Link className="py-2 px-3 transition ease-in-out duration-300 bg-purple-800 hover:bg-white hover:text-purple-800 m-4 text-white rounded-3xl" to={`/movies/${id}`}>Ver detalhes</Link>
+              <Link className="py-2 px-3 transition ease-in-out duration-300 bg-blue-800 hover:bg-white hover:text-blue-800 m-4 text-white rounded-3xl" to={`/movies/${id}`}>Ver detalhes</Link>
         </div>
         </>
     )

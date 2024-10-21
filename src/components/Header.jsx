@@ -13,7 +13,7 @@ export default function Header(){
     
     return(
         <>
-            <header className="w-full h-10 flex justify-between items-center p-10 mb-10 bg-purple-900">
+            <header className="w-full h-10 flex justify-between items-center p-10 mb-10 bg-blue-900">
                 <div>
                     <h1>Portal Filmes</h1>
                 </div>
