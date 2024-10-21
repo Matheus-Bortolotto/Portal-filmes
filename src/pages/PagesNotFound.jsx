@@ -1,8 +1,5 @@
-export default function PagesNotFound(){
+export default function PageNotFound(){
     return(
-        <>
-        <h1>pagesnotfound</h1>
-        {/* Exibe detalhes de um filme específico. */}
-        </>
+        <h1>Página não encontrada</h1>
     )
 }
