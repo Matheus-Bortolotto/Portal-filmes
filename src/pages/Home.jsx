@@ -9,6 +9,8 @@ export default function Home(){
     const [popularMovies, setPopularMovies] = useState([]);
     const [animationMovies, setAnimationMovies] = useState([]);
     const [scienceFictionMovies, setScienceFictionMovies] = useState([]);
+    const [porVirMovies, setporVirMovies] = useState([]);
+    const [maisVotadosMovies, setmaisVotadosMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const { favorites, handleFavorite, isFavorite } = useContext(FavoritesContext);
 
@@ -21,22 +23,30 @@ export default function Home(){
             const popularURL = `${BASE_URL}/movie/popular${API_KEY}&language=pt-br&page=1`;
             const animationURL = `${BASE_URL}/discover/movie${API_KEY}&language=pt-br&with_genres=16`;
             const scienceFictionURL = `${BASE_URL}/discover/movie${API_KEY}&language=pt-br&with_genres=878`;
+            const porVirMoviesURL = `${BASE_URL}/movie/upcoming${API_KEY}&language=pt-br&page=1`;
+            const maisVotadosMoviesURL = `${BASE_URL}/movie/top_rated${API_KEY}&language=pt-br&page=1`;
             //Faz a busca dos filmes
-            const [popularResponse, animationResponse, scienceFictionResponse] = await Promise.all([
+            const [popularResponse, animationResponse, scienceFictionResponse, porVirMoviesResponse, maisVotadosMoviesResponse] = await Promise.all([
                 fetch(popularURL),
                 fetch(animationURL),
-                fetch(scienceFictionURL)
+                fetch(scienceFictionURL),
+                fetch(porVirMoviesURL),
+                fetch(maisVotadosMoviesURL)
               ]);
 
             // Converte os resultados para JSON
             const popularData = await popularResponse.json();
             const upcomingData = await animationResponse.json();
             const trendingData = await scienceFictionResponse.json();
+            const porvir  = await porVirMoviesResponse.json();
+            const maisVotados = await maisVotadosMoviesResponse.json();
 
             // Atualiza o estado com os dados recebidos
             setPopularMovies(popularData.results);
             setAnimationMovies(upcomingData.results);
             setScienceFictionMovies(trendingData.results);
+            setporVirMovies(porvir.results)
+            setmaisVotadosMovies(maisVotados.results);
         }
         catch(error){
             console.error('Erro ao buscar os filmes:', error);
@@ -74,7 +84,7 @@ export default function Home(){
                 <MovieCard
                     key={movie.id} {...movie} 
                     handleFavorite={handleFavorite}
-                    isFavorite={isFavorite}/>
+                    isFavorite={isFavorite(movie)}/>
                 )
             )
         }
@@ -86,7 +96,31 @@ export default function Home(){
                 <MovieCard
                     key={movie.id} {...movie} 
                     handleFavorite={handleFavorite}
-                    isFavorite={isFavorite}/>
+                    isFavorite={isFavorite(movie)}/>
+                )
+            )
+        }
+        </ContainerMovies>
+        <ContainerMovies titulo="Filmes Por Vir">
+        {
+            porVirMovies
+            .map( movie => (
+                <MovieCard
+                    key={movie.id} {...movie} 
+                    handleFavorite={handleFavorite}
+                    isFavorite={isFavorite(movie)}/>
+                )
+            )
+        }
+        </ContainerMovies>
+        <ContainerMovies titulo="Filmes Mais Votados">
+        {
+            maisVotadosMovies
+            .map( movie => (
+                <MovieCard
+                    key={movie.id} {...movie} 
+                    handleFavorite={handleFavorite}
+                    isFavorite={isFavorite(movie)}/>
                 )
             )
         }
