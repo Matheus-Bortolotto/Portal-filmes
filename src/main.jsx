@@ -1,35 +1,34 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import Contato from './pages/Contato.jsx'
+import GenreList from './pages/GenreListPage.jsx'
 import Home from './pages/Home.jsx'
+import MovieDetailPage from './pages/MovieDetailPage.jsx'
 import MovieListPage from './pages/MovieListPage.jsx'
 import MoviesByGenrePage from './pages/MoviesByGenrePage.jsx'
-import GenreListPage from './pages/GenreListPage.jsx'
-import MovieDetailPage from './pages/MovieDetailPage.jsx'
-import PagesNotFound from './pages/PagesNotFound.jsx'
-import Contato from './pages/Contato.jsx'
+import PageNotFound from './pages/PagesNotFound.jsx'
 
-const router = createBrowserRouter([{
-  path:'/',
-  element: <App/>,
-  children: [
-      {index:true, element: <Home/>},
-      {path:'filmes', element: <MovieListPage/>},
-      {path: 'filmes/:id', element:<MovieDetailPage/>},
-      {path:'generos', element:<GenreListPage/>},
-      {path: 'generos/:id', element:<MoviesByGenrePage/>},
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: '/movies', element: <MovieListPage /> },
+      { path: '/movies/:id', element: <MovieDetailPage /> },
+      { path: '/genre', element: <GenreList /> },
+      { path: '/genre/:id', element: <MoviesByGenrePage /> },
       { path: '/contato', element: <Contato /> },
-      {path: '*', element: <PagesNotFound/>}
-    ]   
-}
+      { path: '*', element: <PageNotFound /> }
+    ]
+
+  }
 ])
-
-
-  createRoot(document.getElementById('root')).render(
-    <StrictMode>
-    <RouterProvider router={router}/>
-    </StrictMode>,
-   )
-   
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
+)
