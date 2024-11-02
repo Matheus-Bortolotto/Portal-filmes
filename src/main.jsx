@@ -11,6 +11,8 @@ import GenreList from './pages/GenreListPage.jsx';
 import PageNotFound from './pages/PagesNotFound.jsx';
 import Favorites from './pages/Favorites.jsx';
 import Contato from './pages/Contato.jsx';
+import MeusFilmes from "./pages/MeusFilmes.jsx";
+
 
 import { FavoritesProvider } from './context/FavoritesContext.jsx';
 import { WatchedProvider } from './context/WatchedContext.jsx';
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
       { path: '/genre/:genero', element: <MoviesByGenrePage /> },
       { path: '/favoritos', element: <Favorites /> },
       { path: '/contato', element: <Contato /> },
+      { path: '/meus-filmes', element: <MeusFilmes /> },
       { path: '*', element: <PageNotFound /> },
     ],
   },

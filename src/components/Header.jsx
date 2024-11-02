@@ -24,7 +24,7 @@ export default function Header(){
                         <li><NavLink to="/genre">Gêneros</NavLink></li>
                         <li><NavLink to="/favoritos">Favoritos</NavLink></li>
                         <li><NavLink to="/contato">Contato</NavLink></li>
-                        {isLogged && <li><NavLink to="/settings">Meus Filmes</NavLink></li>}
+                        {isLogged && <li><NavLink to="/meus-filmes">Meus Filmes</NavLink></li>}
                     </ul>
                 </nav>
                 <BotaoLogin isLogged={isLogged} handleLogin={handleLogin}/>
