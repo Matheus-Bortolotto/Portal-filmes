@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import ContainerMovies from "../components/ContainerMovies";
 import MovieCard from "../components/MovieCard";
 import { FavoritesContext } from "../context/FavoritesContext";
+import RecommendedCarousel from "../components/RecommendedCarousel";
 
 export default function Home() {
     const [recommendedMovies, setRecommendedMovies] = useState([]);
@@ -13,7 +14,7 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
     const { favorites, handleFavorite, isFavorite } = useContext(FavoritesContext);
 
-    const API_KEY = '?api_key=7c572a9f5b3ba776080330d23bb76e1e';
+    const API_KEY = '7c572a9f5b3ba776080330d23bb76e1e';
     const BASE_URL = 'https://api.themoviedb.org/3';
 
     const fetchRecommendedMovies = async (genreIds) => {
@@ -21,7 +22,7 @@ export default function Home() {
             const genreQuery = genreIds.join(',');
             const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreQuery}&language=pt-BR`);
             const data = await response.json();
-            setRecommendedMovies(data.results);
+            setRecommendedMovies(data.results || []); // Garantia de fallback para []
         } catch (error) {
             console.error('Erro ao buscar recomendações:', error);
         }
@@ -43,11 +44,11 @@ export default function Home() {
                 fetch(maisVotadosMoviesURL),
             ]);
 
-            setPopularMovies((await popularResponse.json()).results);
-            setAnimationMovies((await animationResponse.json()).results);
-            setScienceFictionMovies((await scienceFictionResponse.json()).results);
-            setporVirMovies((await porVirMoviesResponse.json()).results);
-            setmaisVotadosMovies((await maisVotadosMoviesResponse.json()).results);
+            setPopularMovies((await popularResponse.json()).results || []);
+            setAnimationMovies((await animationResponse.json()).results || []);
+            setScienceFictionMovies((await scienceFictionResponse.json()).results || []);
+            setporVirMovies((await porVirMoviesResponse.json()).results || []);
+            setmaisVotadosMovies((await maisVotadosMoviesResponse.json()).results || []);
         } catch (error) {
             console.error('Erro ao buscar os filmes:', error);
         } finally {
@@ -72,30 +73,11 @@ export default function Home() {
             ) : (
                 <>
                     {/* Carrossel de Filmes Recomendados */}
-                    <ContainerMovies titulo="Recomendados para Você">
-                        <div className="flex overflow-x-scroll gap-4 p-4">
-                            {recommendedMovies.length > 0 ? (
-                                recommendedMovies.map(movie => (
-                                    <div
-                                        key={movie.id}
-                                        className="flex-none w-64 bg-gray-800 p-2 rounded-md shadow-lg"
-                                    >
-                                        <MovieCard
-                                            {...movie}
-                                            handleFavorite={handleFavorite}
-                                            isFavorite={isFavorite(movie)}
-                                        />
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="text-gray-400">Nenhuma recomendação disponível.</p>
-                            )}
-                        </div>
-                    </ContainerMovies>
+                    <RecommendedCarousel />
 
                     {/* Outras Seções de Filmes */}
                     <ContainerMovies titulo="Filmes Populares">
-                        {popularMovies.map(movie => (
+                        {(popularMovies || []).map(movie => (
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
@@ -105,7 +87,7 @@ export default function Home() {
                         ))}
                     </ContainerMovies>
                     <ContainerMovies titulo="Animações">
-                        {animationMovies.map(movie => (
+                        {(animationMovies || []).map(movie => (
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
@@ -115,7 +97,7 @@ export default function Home() {
                         ))}
                     </ContainerMovies>
                     <ContainerMovies titulo="Ficção Científica">
-                        {scienceFictionMovies.map(movie => (
+                        {(scienceFictionMovies || []).map(movie => (
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
@@ -125,7 +107,7 @@ export default function Home() {
                         ))}
                     </ContainerMovies>
                     <ContainerMovies titulo="Filmes Por Vir">
-                        {porVirMovies.map(movie => (
+                        {(porVirMovies || []).map(movie => (
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
@@ -135,7 +117,7 @@ export default function Home() {
                         ))}
                     </ContainerMovies>
                     <ContainerMovies titulo="Filmes Mais Votados">
-                        {maisVotadosMovies.map(movie => (
+                        {(maisVotadosMovies || []).map(movie => (
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
