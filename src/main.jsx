@@ -12,6 +12,7 @@ import PageNotFound from './pages/PagesNotFound.jsx';
 import Favorites from './pages/Favorites.jsx';
 import Contato from './pages/Contato.jsx';
 import MeusFilmes from "./pages/MeusFilmes.jsx";
+import { FavoritesContext } from './context/FavoritesContext.jsx';
 
 
 import { FavoritesProvider } from './context/FavoritesContext.jsx';
