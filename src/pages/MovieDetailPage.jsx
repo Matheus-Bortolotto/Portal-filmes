@@ -9,6 +9,7 @@ export default function MovieDetailPage() {
     const [movie, setMovie] = useState(null);
     const [revenueInBRL, setRevenueInBRL] = useState(null);
     const [trailer, setTrailer] = useState(null);
+    const [message, setMessage] = useState(null); // Estado para as mensagens de notificação
 
     const { addWatched } = useContext(WatchedContext);
     const { addWatchLater } = useContext(WatchLaterContext);
@@ -44,6 +45,18 @@ export default function MovieDetailPage() {
         fetchTrailer();
     }, [id]);
 
+    const handleAddWatched = () => {
+        addWatched(movie);
+        setMessage("O filme foi adicionado à sua lista de assistidos!");
+        setTimeout(() => setMessage(null), 3000); // Remove a mensagem após 3 segundos
+    };
+
+    const handleAddWatchLater = () => {
+        addWatchLater(movie);
+        setMessage("O filme foi adicionado à sua lista de assistir depois!");
+        setTimeout(() => setMessage(null), 3000); // Remove a mensagem após 3 segundos
+    };
+
     if (!movie) return <p>Loading...</p>;
 
     return (
@@ -66,13 +79,18 @@ export default function MovieDetailPage() {
                         </div>
                     </div>
                     <div className="flex gap-4 mt-4">
-                        <button onClick={() => addWatched(movie)} className="bg-green-500 px-4 py-2 rounded text-white flex items-center gap-2">
+                        <button onClick={handleAddWatched} className="bg-green-500 px-4 py-2 rounded text-white flex items-center gap-2 hover:scale-110">
                             <FaEye /> Assistido
                         </button>
-                        <button onClick={() => addWatchLater(movie)} className="bg-blue-500 px-4 py-2 rounded text-white flex items-center gap-2">
+                        <button onClick={handleAddWatchLater} className="bg-blue-500 px-4 py-2 rounded text-white flex items-center gap-2 hover:scale-110">
                             <FaClock /> Ver Depois
                         </button>
                     </div>
+                    {message && (
+                        <div className="bg-black text-red-800 p-4 mt-4 rounded shadow-lg">
+                            {message}
+                        </div>
+                    )}
                     {trailer ? (
                         <iframe
                             width="560"
